@@ -5,6 +5,10 @@ import subprocess
 azure_pat = os.getenv("AZURE_DEVOPS_PAT")
 github_pat = os.getenv("GITHUB_PAT")
 
+# 🔍 Debugging: Check if the environment variable is being set
+print(f"🔍 AZURE_DEVOPS_PAT: {repr(azure_pat)}")  # Shows raw value (should not be None)
+print(f"🔍 AZURE_DEVOPS_PAT length: {len(azure_pat) if azure_pat else 'None'}")
+
 # Debugging: Check if PATs are set
 if not azure_pat or not github_pat:
     print("❌ Error: One or both PATs are not set. Exiting.")
