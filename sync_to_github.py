@@ -5,12 +5,17 @@ import subprocess
 azure_pat = os.getenv("AZURE_DEVOPS_PAT")
 github_pat = os.getenv("GITHUB_PAT")
 
+# Debugging: Check if PATs are set
 if not azure_pat or not github_pat:
     print("❌ Error: One or both PATs are not set. Exiting.")
+    print(f"AZURE_DEVOPS_PAT length: {len(azure_pat) if azure_pat else 'None'}")
+    print(f"GITHUB_PAT length: {len(github_pat) if github_pat else 'None'}")
     exit(1)
 
-# Define repository URLs
+# ✅ Corrected Azure DevOps repo URL format
 AZURE_DEVOPS_REPO = f"https://:{azure_pat}@dev.azure.com/SubashMahat/NYC%20TLC%20Trip/_git/NYC%20TLC%20Trip"
+
+# ✅ Corrected GitHub repo URL
 GITHUB_USERNAME = "mahatnino"
 GITHUB_REPO_URL = f"https://{github_pat}@github.com/{GITHUB_USERNAME}/NYC_TLC_Trip.git"
 
@@ -21,7 +26,7 @@ if not os.path.exists("repo"):
 # Move into repo directory
 os.chdir("repo")
 
-# Configure Git user (replace with your GitHub username/email)
+# Configure Git user
 subprocess.run(["git", "config", "--global", "user.email", "subashmahat35@gmail.com"], check=True)
 subprocess.run(["git", "config", "--global", "user.name", GITHUB_USERNAME], check=True)
 
