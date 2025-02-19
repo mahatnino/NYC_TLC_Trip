@@ -1,28 +1,39 @@
 import os
 import subprocess
 
-# Get the GitHub PAT from environment variables
+# Get Azure DevOps and GitHub PATs securely from environment variables
+azure_pat = os.getenv("AZURE_DEVOPS_PAT")
 github_pat = os.getenv("GITHUB_PAT")
-print("done line6")
-if not github_pat:
-    print("Error: GitHub PAT is not set. Exiting.")
+
+if not azure_pat or not github_pat:
+    print("❌ Error: One or both PATs are not set. Exiting.")
     exit(1)
-print("done line10")
-# GitHub repo URL (use token for authentication)
-github_repo_url = f"https://{github_pat}@github.com/mahatnino/NYC_TLC_Trip.git"
-print("done line13")
-# Configure Git user
+
+# Define repository URLs
+AZURE_DEVOPS_REPO = f"https://{azure_pat}@dev.azure.com/SubashMahat/NYC%20TLC%20Trip/_git/NYC%20TLC%20Trip"
+GITHUB_USERNAME = "mahatnino"
+GITHUB_REPO_URL = f"https://{github_pat}@github.com/{GITHUB_USERNAME}/NYC_TLC_Trip.git"
+
+# Clone Azure DevOps repository if not already cloned
+if not os.path.exists("repo"):
+    subprocess.run(["git", "clone", "--mirror", AZURE_DEVOPS_REPO, "repo"], check=True)
+
+# Move into repo directory
+os.chdir("repo")
+
+# Configure Git user (replace with your GitHub username/email)
 subprocess.run(["git", "config", "--global", "user.email", "subashmahat35@gmail.com"], check=True)
-print("done line16")
-subprocess.run(["git", "config", "--global", "user.name", "mahatnino"], check=True)
-print("done line18")
-# Add GitHub as a remote
-subprocess.run(["git", "remote", "add", "github", github_repo_url], check=True)
-print("done line20")
-# Fetch the latest changes
-subprocess.run(["git", "fetch", "origin"], check=True)
-print("done line24")
-# Push changes to GitHub
-subprocess.run(["git", "push", "github", "main"], check=True)  # Change branch if needed
+subprocess.run(["git", "config", "--global", "user.name", GITHUB_USERNAME], check=True)
+
+# Ensure GitHub remote is correctly set up
+existing_remotes = subprocess.run(["git", "remote"], capture_output=True, text=True).stdout
+if "github" in existing_remotes:
+    subprocess.run(["git", "remote", "remove", "github"], check=True)
+
+subprocess.run(["git", "remote", "add", "github", GITHUB_REPO_URL], check=True)
+
+# Fetch latest changes and push to GitHub
+subprocess.run(["git", "fetch", "--prune"], check=True)
+subprocess.run(["git", "push", "--mirror", "github"], check=True)
 
 print("✅ Sync completed successfully!")
