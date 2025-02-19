@@ -12,9 +12,13 @@ steps:
     versionSpec: '3.x'
 
 - script: |
+    echo "🔍 Checking if PATs are set..."
+    echo "🔍 AZURE_DEVOPS_PAT length: ${#AZURE_DEVOPS_PAT}"  # Ensure this prints a number > 0
+    export AZURE_DEVOPS_PAT=${AZURE_DEVOPS_PAT}  # ✅ Explicitly export the variable
+    export GITHUB_PAT=${GITHUB_PAT}
     python -m pip install --upgrade pip
     python sync_to_github.py
   env:
-    AZURE_DEVOPS_PAT: $(AZURE_DEVOPS_PAT)
+    AZURE_DEVOPS_PAT: $(AZURE_DEVOPS_PAT)  # ✅ Ensure secrets are passed
     GITHUB_PAT: $(GITHUB_PAT)
   displayName: "Run Python Sync Script"
