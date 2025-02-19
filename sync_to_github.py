@@ -3,7 +3,7 @@ import subprocess
 
 # Get the GitHub PAT from environment variables
 github_pat = os.getenv("GITHUB_PAT")
-
+print(github_pat)
 if not github_pat:
     print("Error: GitHub PAT is not set. Exiting.")
     exit(1)
