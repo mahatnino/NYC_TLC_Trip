@@ -13,12 +13,14 @@ steps:
 
 - script: |
     echo "🔍 Checking if PATs are set..."
-    echo "🔍 AZURE_DEVOPS_PAT length: ${#AZURE_DEVOPS_PAT}"  # Ensure this prints a number > 0
-    export AZURE_DEVOPS_PAT=${AZURE_DEVOPS_PAT}  # ✅ Explicitly export the variable
+    echo "🔍 AZURE_DEVOPS_PAT length: ${#AZURE_DEVOPS_PAT}"  # Should print a real number
+    export AZURE_DEVOPS_PAT=${AZURE_DEVOPS_PAT}  # ✅ Force correct expansion
     export GITHUB_PAT=${GITHUB_PAT}
+    echo "🔍 Exported AZURE_DEVOPS_PAT length: ${#AZURE_DEVOPS_PAT}"
     python -m pip install --upgrade pip
     python sync_to_github.py
   env:
-    AZURE_DEVOPS_PAT: $(AZURE_DEVOPS_PAT)  # ✅ Ensure secrets are passed
+    AZURE_DEVOPS_PAT: $(AZURE_DEVOPS_PAT)  # ✅ Ensure secrets are passed correctly
     GITHUB_PAT: $(GITHUB_PAT)
   displayName: "Run Python Sync Script"
+
