@@ -13,7 +13,7 @@ steps:
 
 - script: |
     python -m pip install --upgrade pip
-    python sync_repo.py
+    python sync_to_github.py
   env:
     AZURE_DEVOPS_PAT: $(AZURE_DEVOPS_PAT)
     GITHUB_PAT: $(GITHUB_PAT)
