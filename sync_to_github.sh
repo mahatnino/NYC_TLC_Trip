@@ -12,8 +12,8 @@ if [[ -z "$AZURE_DEVOPS_PAT" || -z "$GITHUB_PAT" ]]; then
 fi
 
 # Define repository URLs
-AZURE_DEVOPS_REPO="https://$AZURE_DEVOPS_PAT@dev.azure.com/SubashMahat/NYC%20TLC%20Trip/_git/NYC%20TLC%20Trip"
-GITHUB_REPO="https://$GITHUB_PAT@github.com/mahatnino/NYC_TLC_Trip.git"
+AZURE_DEVOPS_REPO="https://${AZURE_DEVOPS_PAT}@dev.azure.com/SubashMahat/NYC%20TLC%20Trip/_git/NYC%20TLC%20Trip"
+GITHUB_REPO="https://${GITHUB_PAT}@github.com/mahatnino/NYC_TLC_Trip.git"
 
 # Clone Azure DevOps repository
 echo "🔄 Cloning Azure DevOps repo..."
