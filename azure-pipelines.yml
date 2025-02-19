@@ -11,12 +11,20 @@ steps:
     echo "🔍 Checking environment variables..."
     echo "🔍 AZURE_DEVOPS_PAT length: ${#AZURE_DEVOPS_PAT}"  # Should print a real number
     echo "🔍 GITHUB_PAT length: ${#GITHUB_PAT}"
-    sudo apt-get install dos2unix -y  # Install dos2unix
-    dos2unix sync_to_github.sh  # Convert to Unix format
+
+    sudo apt-get install dos2unix -y  # Convert script if necessary
+    dos2unix sync_to_github.sh  
+
     chmod +x sync_to_github.sh
+
+    # ✅ Export the variable to ensure it's expanded properly in the script
+    export AZURE_DEVOPS_PAT="${AZURE_DEVOPS_PAT}"
+    export GITHUB_PAT="${GITHUB_PAT}"
+
     ./sync_to_github.sh
   env:
-    AZURE_DEVOPS_PAT: $(AZURE_DEVOPS_PAT)
+    AZURE_DEVOPS_PAT: $(AZURE_DEVOPS_PAT)  # ✅ Ensure secret is passed correctly
     GITHUB_PAT: $(GITHUB_PAT)
   displayName: "Run Sync Script"
+
 
