@@ -1,23 +1,20 @@
 trigger:
-  - main  # Run pipeline when changes are pushed to main branch
+- main  # Change to your main branch
 
 pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-  - checkout: self  # Fetch the Azure DevOps repo
+- checkout: self
 
-  - task: UsePythonVersion@0
-    inputs:
-      versionSpec: '3.x'
-    displayName: 'Set up Python'
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.x'
 
-  - script: |
-      pip install --upgrade pip
-    displayName: 'Upgrade pip'
-
-  - script: |
-      python sync_to_github.py
-    displayName: 'Run Python script to sync repos'
-    env:
-      GITHUB_PAT: $(GITHUB_PAT)  # Fetch secret token from Azure DevOps
+- script: |
+    python -m pip install --upgrade pip
+    python sync_repo.py
+  env:
+    AZURE_DEVOPS_PAT: $(AZURE_DEVOPS_PAT)
+    GITHUB_PAT: $(GITHUB_PAT)
+  displayName: "Run Python Sync Script"
