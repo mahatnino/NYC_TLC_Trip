@@ -9,8 +9,7 @@ if not github_pat:
     exit(1)
 
 # GitHub repo URL (use token for authentication)
-github_repo_url = f"https://{github_pat}@github.com/your-github-username/repo2.git"
-
+github_repo_url = f"https://{github_pat}@github.com/mahatnino/NYC_TLC_Trip.git"
 # Configure Git user
 subprocess.run(["git", "config", "--global", "user.email", "subashmahat35@gmail.com"], check=True)
 subprocess.run(["git", "config", "--global", "user.name", "mahatnino"], check=True)
