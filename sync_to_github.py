@@ -10,7 +10,7 @@ if not azure_pat or not github_pat:
     exit(1)
 
 # Define repository URLs
-AZURE_DEVOPS_REPO = f"https://{azure_pat}@dev.azure.com/SubashMahat/NYC%20TLC%20Trip/_git/NYC%20TLC%20Trip"
+AZURE_DEVOPS_REPO = f"https://:{azure_pat}@dev.azure.com/SubashMahat/NYC%20TLC%20Trip/_git/NYC%20TLC%20Trip"
 GITHUB_USERNAME = "mahatnino"
 GITHUB_REPO_URL = f"https://{github_pat}@github.com/{GITHUB_USERNAME}/NYC_TLC_Trip.git"
 
