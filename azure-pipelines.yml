@@ -18,7 +18,7 @@ steps:
     export GITHUB_PAT="${GITHUB_PAT}"
 
     # ✅ Print inside Python before running the script
-    python -c "import os; print(f'AZURE_DEVOPS_PAT in Python: {os.getenv("AZURE_DEVOPS_PAT")}')"
+    # python -c "import os; print(f'AZURE_DEVOPS_PAT in Python: {os.getenv("AZURE_DEVOPS_PAT")}')"
 
     python -m pip install --upgrade pip
     python sync_to_github.py
