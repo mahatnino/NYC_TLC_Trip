@@ -4,22 +4,25 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
+variables:
+- group: PAT_TOKENS  # ✅ Ensure secrets are pulled from Azure DevOps Library
+
 steps:
 - script: |
     echo "🔍 Checking environment variables..."
     echo "🔍 AZURE_DEVOPS_PAT length: ${#AZURE_DEVOPS_PAT}"  # Should print a number
     echo "🔍 GITHUB_PAT length: ${#GITHUB_PAT}"
 
-    # ✅ Export variables explicitly to ensure Python picks them up
+    # ✅ Explicitly export the variables
     export AZURE_DEVOPS_PAT="${AZURE_DEVOPS_PAT}"
     export GITHUB_PAT="${GITHUB_PAT}"
 
-    # ✅ Print variables inside Python
-    python -c "import os; print(f'AZURE_DEVOPS_PAT: {os.getenv("AZURE_DEVOPS_PAT")}')"
-    
+    # ✅ Print inside Python before running the script
+    python -c "import os; print(f'AZURE_DEVOPS_PAT in Python: {os.getenv("AZURE_DEVOPS_PAT")}')"
+
     python -m pip install --upgrade pip
     python sync_to_github.py
   env:
-    AZURE_DEVOPS_PAT: $(AZURE_DEVOPS_PAT)  # ✅ Ensure secrets are passed
+    AZURE_DEVOPS_PAT: $(AZURE_DEVOPS_PAT)  # ✅ Ensures secret is passed correctly
     GITHUB_PAT: $(GITHUB_PAT)
   displayName: "Run Python Sync Script"
