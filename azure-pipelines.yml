@@ -9,16 +9,9 @@ variables:
 
 steps:
 - script: |
-    echo "🔍 Checking environment variables..."
-    echo "🔍 AZURE_DEVOPS_PAT length: ${#AZURE_DEVOPS_PAT}"  # Should print a number
-    echo "🔍 GITHUB_PAT length: ${#GITHUB_PAT}"
-
     # ✅ Explicitly export the variables
     export AZURE_DEVOPS_PAT="${AZURE_DEVOPS_PAT}"
     export GITHUB_PAT="${GITHUB_PAT}"
-
-    # ✅ Print inside Python before running the script
-    # python -c "import os; print(f'AZURE_DEVOPS_PAT in Python: {os.getenv("AZURE_DEVOPS_PAT")}')"
 
     python -m pip install --upgrade pip
     python sync_to_github.py
