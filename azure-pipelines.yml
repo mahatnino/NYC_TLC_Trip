@@ -10,8 +10,8 @@ variables:
 steps:
 - script: |
     # ✅ Explicitly export the variables
-    export AZURE_DEVOPS_PAT="${AZURE_DEVOPS_PAT}"
-    export GITHUB_PAT="${GITHUB_PAT}"
+    # export AZURE_DEVOPS_PAT="${AZURE_DEVOPS_PAT}"
+    # export GITHUB_PAT="${GITHUB_PAT}"
 
     python -m pip install --upgrade pip
     python sync_to_github.py
